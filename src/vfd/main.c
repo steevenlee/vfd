@@ -409,8 +409,8 @@ static int vfd_eal_init( parms_t* parms ) {
 	argv[3] = strdup( "-n" );
 	argv[4] = strdup( "4" );
 		
-	argv[5] = strdup( "-m" );
-	argv[6] = strdup( "50" );					// MiB of memory
+	argv[5] = strdup( " " );
+	argv[6] = strdup( " " );					// MiB of memory
 	
 	argv[7] = strdup( "--file-prefix" );
 	argv[8] = strdup( "vfd" );					// dpdk creates some kind of lock file, this is used for that
@@ -419,7 +419,7 @@ static int vfd_eal_init( parms_t* parms ) {
 	snprintf( wbuf, sizeof( wbuf ), "%d", parms->dpdk_init_log_level );
 	argv[10] = strdup( wbuf );
 	
-	argv[11] = strdup( "--no-huge" );
+	argv[11] = strdup( " " );
 
 	for( i = 0; i < parms->npciids && argc_idx < argc - 1; i++ ) {			// add in the -w pciid values to the list
 		argv[argc_idx++] = strdup( "-w" );
