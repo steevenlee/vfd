@@ -2065,7 +2065,10 @@ main(int argc, char **argv)
 
 		// read PCI config to get VM offset and stride 
 		struct rte_eth_dev *pf_dev = &rte_eth_devices[0];
-		rte_eal_pci_read_config(pf_dev->pci_dev, &pci_control_r, 32, 0x174);
+		struct rte_eth_dev_info dev_info;
+		RTE_FUNC_PTR_OR_ERR_RET(*pf_dev->dev_ops->dev_infos_get, -ENOTSUP);
+		(*pf_dev->dev_ops->dev_infos_get)(pf_dev, &dev_info);
+		rte_eal_pci_read_config(dev_info.pci_dev, &pci_control_r, 32, 0x174);
 		vf_offfset = pci_control_r & 0x0ffff;
 		vf_stride = pci_control_r >> 16;
 		bleat_printf( 2, "indexes were mapped" );
