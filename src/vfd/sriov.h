@@ -65,6 +65,9 @@
 
 #include "../lib/dpdk/drivers/net/ixgbe/base/ixgbe_mbx.h"
 
+
+#define RTE_BRCM
+
 #define RX_RING_SIZE 128
 #define TX_RING_SIZE 64
 #define NUM_MBUFS 512

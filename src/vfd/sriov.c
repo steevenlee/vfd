@@ -333,12 +333,18 @@ void set_queue_drop( portid_t port_id, int state ) {
 	int		result;
 
 	bleat_printf( 2, "setting queue drop for port %d on all queues to: on/off=%d", port_id, !!state );
+#ifndef RTE_BRCM
 	for( i = 0; i < 128; i++ ) {
 		result = rte_pmd_ixgbe_set_vf_split_drop_en( port_id, i, !!state );
 		if( result != 0 ) {
 			bleat_printf( 0, "fail: unable to set drop enable for port %d vf %d on/off=%d: errno=%d", port_id, i, !!state, -result );
 		}
 	}
+#else
+	(void) result;
+	(void) i;
+	// TODO BRCM this api changed to PF in master branch
+#endif
 	
 	/*
 	 disable default pool to avoid DMAR errors when we get packets not destined to any VF
