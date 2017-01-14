@@ -127,7 +127,12 @@ tx_vlan_insert_set_on_vf(portid_t port_id, uint16_t vf_id, int vlan_id)
 {
 	int diag;
 
+#ifdef RTE_BRCM
+	// TODO BRCM set vf vland insert
+	diag = 0;
+#else
 	diag = rte_pmd_ixgbe_set_vf_vlan_insert( port_id, vf_id, vlan_id );
+#endif
 
 	if (diag < 0) {
 		bleat_printf( 0, "rte_eth_dev_set_vf_vlan_insert(port_pi=%d, vf_id=%d, vlan_id=%d) failed " "diag=%d", port_id, vf_id, vlan_id, diag);
@@ -142,7 +147,12 @@ rx_vlan_strip_set_on_vf(portid_t port_id, uint16_t vf_id, int on)
 {
 	int diag;
 
+#ifdef RTE_BRCM
+	// TODO BRCM set vf vlan strip
+	diag = 0;
+#else
 	diag = rte_pmd_ixgbe_set_vf_vlan_stripq(port_id, vf_id, on);
+#endif
 	if (diag < 0) {
 		bleat_printf( 0, "rte_eth_dev_set_vf_vlan_strip_on(port_pi=%d, vf_id=%d, on=%d) failed " "diag=%d", port_id, vf_id, on, diag);
 	} else {
@@ -154,7 +164,8 @@ rx_vlan_strip_set_on_vf(portid_t port_id, uint16_t vf_id, int on)
 void
 set_vf_allow_bcast(portid_t port_id, uint16_t vf_id, int on)
 {
-  int ret = rte_eth_dev_set_vf_rxmode(port_id, vf_id, ETH_VMDQ_ACCEPT_BROADCAST,(uint8_t) on);
+	//TODO BRCM set vf rxmode
+	int ret = rte_eth_dev_set_vf_rxmode(port_id, vf_id, ETH_VMDQ_ACCEPT_BROADCAST,(uint8_t) on);
 	
 	if (ret < 0) {
     	bleat_printf( 0, "set_vf_allow_bcast(): bad VF receive mode parameter, return code = %d", ret);
@@ -167,6 +178,7 @@ set_vf_allow_bcast(portid_t port_id, uint16_t vf_id, int on)
 void
 set_vf_allow_mcast(portid_t port_id, uint16_t vf_id, int on)
 {
+	//TODO BRCM set vf rxmode
 	int ret = rte_eth_dev_set_vf_rxmode(port_id, vf_id, ETH_VMDQ_ACCEPT_MULTICAST,(uint8_t) on);
 	
 	if (ret < 0) {
@@ -180,6 +192,7 @@ set_vf_allow_mcast(portid_t port_id, uint16_t vf_id, int on)
 void
 set_vf_allow_un_ucast(portid_t port_id, uint16_t vf_id, int on)
 {
+	//TODO BRCM set vf rx_mode
 	int ret = rte_eth_dev_set_vf_rxmode(port_id, vf_id, ETH_VMDQ_ACCEPT_HASH_UC,(uint8_t) on);
 	
 	if (ret < 0) {
@@ -246,7 +259,12 @@ set_vf_vlan_anti_spoofing(portid_t port_id, uint32_t vf, uint8_t on)
 {
 	int diag;
 
+#ifdef RTE_BRCM
+	// TODO BRCM set vf vlan anti-spoof
+	diag = 0;
+#else
 	diag = rte_pmd_ixgbe_set_vf_vlan_anti_spoof(port_id, vf, on);
+#endif
 	if (diag == 0) {
 		bleat_printf( 3, "set vlan antispoof successful: port=%d vf=%d on/off=%d", (int)port_id, (int)vf, on );
 	} else {
@@ -261,7 +279,12 @@ set_vf_mac_anti_spoofing(portid_t port_id, uint32_t vf, uint8_t on)
 {
 	int diag;
 
+#ifdef RTE_BRCM
+	// TODO BRCM set vf mac anti-spoof
+	diag = 0;
+#else
 	diag = rte_pmd_ixgbe_set_vf_mac_anti_spoof(port_id, vf, on);
+#endif
 	if (diag == 0) {
 		bleat_printf( 3, "set mac antispoof successful: port=%d vf=%d on/off=%d", (int)port_id, (int)vf, on );
 	} else {
@@ -275,7 +298,12 @@ tx_set_loopback(portid_t port_id, u_int8_t on)
 {
 	int diag;
 
+#ifdef RTE_BRCM
+	// TODO BRCM set loopback
+	diag = 0;
+#else
 	diag = rte_pmd_ixgbe_set_tx_loopback(port_id, on);
+#endif
 	if (diag == 0) {
 		bleat_printf( 3, "set tx loopback successful: port=%d on/off=%d", (int)port_id, on );
 	} else {
@@ -592,6 +620,8 @@ vf_stats_display(uint8_t port_id, uint32_t pf_ari, int ivf, char * buff, int bsi
 	if( ivf < 0 || ivf > 31 ) {
 		return -1;
 	}
+
+	//TODO BRCM get vf stats
 
 	vf = (uint32_t) ivf;						// unsinged for rest
 	

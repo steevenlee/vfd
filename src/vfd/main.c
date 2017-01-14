@@ -1496,7 +1496,7 @@ static int vfd_update_nic( parms_t* parms, struct sriov_conf_c* conf ) {
 				rte_eth_promiscuous_enable(port->rte_port_number);
 				rte_eth_allmulticast_enable(port->rte_port_number);
 	
-				// TODO BRCM implementation. Enable PF unicast?
+				// TODO BRCM PF set unicast?
 				ret = rte_eth_dev_uc_all_hash_table_set(port->rte_port_number, on);
 				if (ret < 0)
 					bleat_printf( 0, "ERR: bad unicast hash table parameter, return code = %d", ret);
