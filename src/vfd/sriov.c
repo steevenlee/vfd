@@ -299,8 +299,7 @@ tx_set_loopback(portid_t port_id, u_int8_t on)
 	int diag;
 
 #ifdef RTE_BRCM
-	// TODO BRCM set loopback
-	diag = 0;
+	diag = rte_pmd_bnxt_set_tx_loopback(port_id, on);
 #else
 	diag = rte_pmd_ixgbe_set_tx_loopback(port_id, on);
 #endif
