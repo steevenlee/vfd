@@ -367,17 +367,20 @@ void set_queue_drop( portid_t port_id, int state ) {
 			bleat_printf( 0, "fail: unable to set drop enable for port %d vf %d on/off=%d: errno=%d", port_id, i, !!state, -result );
 		}
 	}
-#else
-	(void) result;
-	(void) i;
-	// TODO BRCM this api changed to PF in master branch
-#endif
-	
+
 	/*
 	 disable default pool to avoid DMAR errors when we get packets not destined to any VF
 	*/
 
 	disable_default_pool(port_id);
+#else
+	(void) i;
+	result = rte_pmd_bnxt_set_all_queues_drop_en(port_id, !!state);
+	if( result != 0 ) {
+		bleat_printf( 0, "fail: unable to set drop enable for port %d on/off=%d: errno=%d", port_id, !!state, -result );
+	}
+#endif
+	
 }
 
 // --------------- pending reset support ----------------------------------------------------------------------
