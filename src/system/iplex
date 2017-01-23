@@ -29,8 +29,8 @@ __doc__ = """ iplex
         -h, --help      show this help message and exit
         --version       show version and exit
         --loglevel=<value>  Default logvalue [default: 0]
-
-	<what> may be one of:  all, pfs, extended, or <n> where <n> is a PF number.
+   	<what> may be one of:  all, pfs, extended, or <n> where <n> is a PF number.
+	
 """
 
 from docopt import docopt
@@ -228,7 +228,7 @@ if __name__ == '__main__':
     if options['add']:
         iplex.add(options['<port-id>'])
     elif options['update']:
-        iplex.update(options['<port_id>'])
+        iplex.update(options['<port-id>'])
     elif options['delete']:
         iplex.delete(options['<port-id>'])
     elif options['ping']:

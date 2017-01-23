@@ -419,8 +419,8 @@ static int vfd_eal_init( parms_t* parms ) {
 	argv[3] = strdup( "-n" );
 	argv[4] = strdup( "4" );
 		
-	argv[5] = strdup( "-m" );
-	argv[6] = strdup( "50" );					// MiB of memory
+	argv[5] = strdup( " " );
+	argv[6] = strdup( " " );					// MiB of memory
 	
 	argv[7] = strdup( "--file-prefix" );
 	argv[8] = strdup( "vfd" );					// dpdk creates some kind of lock file, this is used for that
@@ -429,7 +429,7 @@ static int vfd_eal_init( parms_t* parms ) {
 	snprintf( wbuf, sizeof( wbuf ), "%d", parms->dpdk_init_log_level );
 	argv[10] = strdup( wbuf );
 	
-	argv[11] = strdup( "--no-huge" );
+	argv[11] = strdup( " " );
 
 	for( i = 0; i < parms->npciids && argc_idx < argc - 1; i++ ) {			// add in the -w pciid values to the list
 		argv[argc_idx++] = strdup( "-w" );
@@ -645,6 +645,7 @@ extern int vfd_update_nic( parms_t* parms, sriov_conf_t* conf ) {
 				rte_eth_promiscuous_enable(port->rte_port_number);
 				rte_eth_allmulticast_enable(port->rte_port_number);
 	
+				// TODO BRCM PF set unicast?
 				ret = rte_eth_dev_uc_all_hash_table_set(port->rte_port_number, on);
 				if (ret < 0)
 					bleat_printf( 0, "ERR: bad unicast hash table parameter, return code = %d", ret);

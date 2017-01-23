@@ -66,12 +66,15 @@
 #include <rte_string_fns.h>
 #include <rte_spinlock.h>
 #include <rte_pmd_ixgbe.h>
+#include <rte_pmd_bnxt.h>
 
 #include "../lib/dpdk/drivers/net/ixgbe/base/ixgbe_mbx.h"
 
 #include <vfdlib.h>
 
 // ---------------------------------------------------------------------------------------
+
+#define RTE_BRCM
 
 #define RX_RING_SIZE 128
 #define TX_RING_SIZE 64
@@ -313,7 +316,7 @@ const char* version;
 sriov_conf_t* running_config;		// global so that callbacks can access
 int port2config_map[MAX_PORTS];		// map hardware port number to our config array index
 
-int terminated;				// set when a signal is received -- causes main loop to gracefully exit
+volatile int terminated;				// set when a signal is received -- causes main loop to gracefully exit
 
 int debug;
 int traceLevel;			  // NORMAL == 5 level, INFO == 6  (deprecated)
