@@ -254,8 +254,11 @@ set_vf_rx_mac(portid_t port_id, const char* mac, uint32_t vf,  __attribute__((__
   struct ether_addr mac_addr;
   ether_aton_r(mac, &mac_addr);
 
-	/* TODO BRCM rte_eth_dev_mac_addr_add() */
+#ifdef RTE_BRCM
+  	diag = rte_pmd_bnxt_set_vf_mac_addr(port_id, vf, &mac_addr);
+#else
 	diag = rte_eth_dev_mac_addr_add(port_id, &mac_addr, vf);
+#endif
 	if (diag < 0) {
 		bleat_printf( 0, "set rx mac failed: port=%d vf=%d on/off=%d mac=%s", (int)port_id, (int)vf, on, mac );
 	} else {
